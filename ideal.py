@@ -4,7 +4,7 @@ import random
 
 class BlackJack:
     def __init__(self):
-        self.cards = {'2':2, '2':3, '4':4, '5':5, '6':6, '7':7, '8':8, '9':9, '10':10, 'J':10, 'Q':10, 'K':10, 'A':11}
+        self.cards = {'2':2, '3':3, '4':4, '5':5, '6':6, '7':7, '8':8, '9':9, '10':10, 'J':10, 'Q':10, 'K':10, 'A':11}
         # print(list(random.sample(list(self.cards.keys()), 2)))
         self.player_hand = list(random.sample(list(self.cards.keys()), 2))
         self.dealer_hand = list(random.sample(list(self.cards.keys()), 2))
@@ -40,22 +40,6 @@ class BlackJack:
             else:   
                 sum += self.get_card_values(key)
         return sum
-
-    # def calculate_player_score(self):
-    #     score = self.get_deck_sum(self.player_hand)
-    #     if score > 21 and 'A' in self.player_hand:
-    #         self.player_hand
-    #         self.player_hand
-    #         score = self.get_deck_sum(self.player_hand)
-    #     return score
-
-    # def calculate_dealer_score(self):
-    #     score = self.get_deck_sum(self.dealer_hand)
-    #     if score > 21 and 11 in self.dealer_hand:
-    #         self.dealer_hand
-    #         self.dealer_hand
-    #         score = self.get_deck_sum(self.dealer_hand)
-    #     return score
 
     def determine_winner(self): 
         if self.player_deck_sum > 21:
@@ -138,6 +122,9 @@ class Game():
         text = ''
         if button_name == "Hit":
             self.blackJack.add_card_to_player()
+            if(self.blackJack.player_deck_sum > 21 or self.blackJack.dealer_deck_sum > self.blackJack.player_deck_sum):
+                status = True
+                text = self.blackJack.determine_winner()
         elif button_name == "Stand":
             while(self.blackJack.dealer_deck_sum < 17):
                 self.blackJack.add_card_to_dealer()
@@ -199,7 +186,7 @@ class Game():
                 self.message_to_screen("Dealer Hand: " + ", ".join(self.blackJack.dealer_hand) + " = " + str(self.blackJack.dealer_deck_sum), self.BLACK,  150, 225)
                 self.message_to_screen(text, self.BLACK, 400, 400)
                 pygame.display.update()
-                pygame.time.wait(1500)
+                pygame.time.wait(3000)
                 self.end = True
             else:
                 
